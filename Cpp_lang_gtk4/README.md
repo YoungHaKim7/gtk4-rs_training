@@ -8,6 +8,9 @@
 gpp_which := "/opt/gcc-15/bin/g++"
 clang_which := "/usr/bin/clang++-20"
 
+# clang-format
+clang_format := `which clang-format-20`
+
 # Source and target directories
 src_dir := "./src"
 target_dir := "target"
@@ -31,7 +34,7 @@ ldflags_fsanitize_object := "-g -fsanitize=address"
 ldflags_fsanitize_valgrind := "-fsanitize=address -g3 -std=c++2b"
 
 # fmt
-fmt_flags := ". -regex '.*\\.\\(cpp\\|hpp\\|cc\\|cxx\\|c\\|h\\)' -exec clang-format -style=file -i {} \\;"
+fmt_flags := ". -regex '.*\\.\\(cpp\\|hpp\\|cc\\|cxx\\|c\\|h\\)' -exec "+clang_format+" -style=file -i {} \\;"
 
 # g++ compile with modules
 r:
