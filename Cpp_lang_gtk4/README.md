@@ -6,6 +6,12 @@
 - https://gitlab.gnome.org/GNOME/gtkmm
 - https://www.gtk.org/docs/language-bindings/cpp
 - https://terminalroot.com/how-to-install-gtkmm-4-on-ubuntu-2204/
+- glib설치
+  - https://blog.naver.com/ambidext/220990050831
+
+# ebooks
+- https://www.gtk.org/docs/language-bindings/cpp
+- https://docs.gtk.org/gtk4/getting_started.html
 
 # justfile(c++)
 
