@@ -7,6 +7,9 @@
 # which clang
 clang_which := `which clang-20`
 
+# clang-format
+clang_format := `which clang-format-20`
+
 # Source and target directories
 src_dir := "./src"
 target_dir := "./target"
@@ -24,6 +27,9 @@ ldflags_fsanitize_address := "-O1 -g -fsanitize=address -fno-omit-frame-pointer 
 ldflags_fsanitize_object := "-g -fsanitize=address"
 ldflags_fsanitize_valgrind := "-fsanitize=address -g3"
 ldflags_optimize :=  "-Wall -O2 -pedantic -pthread -pedantic-errors -lm -Wall -Wextra -ggdb"
+
+# fmt
+fmt_flags := ". -regex '.*\\.\\(cpp\\|hpp\\|cc\\|cxx\\|c\\|h\\)' -exec "+clang_format+" -style=file -i {} \\;"
 
 # (C)clang compile
 r:
@@ -51,6 +57,16 @@ b:
 	rm -rf target
 	mkdir -p target
 	clang {{ldflags_debug}} -o {{target}} {{source}}
+
+# .clang-format init
+cl:
+	rm -rf .clang-format
+	clang-format -style=WebKit -dump-config > .clang-format
+
+# .clang-format fmt
+fmt:
+	find {{fmt_flags}}
+
 
 # clang LLVM emit-file
 ll:
