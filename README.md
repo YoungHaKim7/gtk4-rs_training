@@ -1,5 +1,6 @@
 # gtk4-rs_training
 - https://toshiocp.github.io/Gtk4-tutorial/sec2.html
+  - `https://github.com/ToshioCP/Gtk4-tutorial.git`
 
 <hr />
 
