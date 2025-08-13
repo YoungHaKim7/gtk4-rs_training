@@ -2,6 +2,9 @@
 - https://toshiocp.github.io/Gtk4-tutorial/sec2.html
   - `https://github.com/ToshioCP/Gtk4-tutorial.git`
 
+# 잘 정리됨.
+- https://github.com/ToshioCP/Gtk4-tutorial
+
 <hr />
 
 # rust (gtk4-rs)
