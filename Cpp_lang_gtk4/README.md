@@ -1,6 +1,12 @@
 # Using multiple threads with GTK?
 - https://stackoverflow.com/questions/60817740/using-multiple-threads-with-gtk
 
+# gtkmm
+
+- https://gitlab.gnome.org/GNOME/gtkmm
+- https://www.gtk.org/docs/language-bindings/cpp
+- https://terminalroot.com/how-to-install-gtkmm-4-on-ubuntu-2204/
+
 # justfile(c++)
 
 ```justfile
