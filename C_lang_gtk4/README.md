@@ -1,7 +1,7 @@
 # Using multiple threads with GTK?
 - https://stackoverflow.com/questions/60817740/using-multiple-threads-with-gtk
 
-# justfile(c 언어)
+# justfile(C) gtk4 전용
 
 ```justfile
 # which clang
@@ -9,6 +9,10 @@ clang_which := `which clang-20`
 
 # clang-format
 clang_format := `which clang-format-20`
+
+# gtk4 pkg-config
+gtk4_cflags := `pkg-config --cflags gtk4`
+gtk4_libs := `pkg-config --libs gtk4`
 
 # Source and target directories
 src_dir := "./src"
@@ -35,7 +39,7 @@ fmt_flags := ". -regex '.*\\.\\(cpp\\|hpp\\|cc\\|cxx\\|c\\|h\\)' -exec "+clang_f
 r:
 	rm -rf target
 	mkdir -p target
-	{{clang_which}} {{ldflags_common}} -o {{target}} {{source}}
+	{{clang_which}} {{ldflags_common}} {{gtk4_cflags}} -o {{target}} {{source}} {{gtk4_libs}}
 	{{target}}
 
 # (C)clang compile(Optimization)
