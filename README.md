@@ -4,6 +4,7 @@
 
 # 잘 정리됨.
 - https://github.com/ToshioCP/Gtk4-tutorial
+- https://github.com/ToshioCP/Gobject-tutorial
 
 <hr />
 
