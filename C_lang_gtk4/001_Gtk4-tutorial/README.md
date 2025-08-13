@@ -28,7 +28,7 @@ gcc `pkg-config --cflags gtk4` pr1.c `pkg-config --libs gtk4`
 clang_which := `which clang-20`
 
 # clang-format
-clang_format := `which clang-format-20`
+clang_format := `which clang-format`
 
 # gtk4 pkg-config
 gtk4_cflags := `pkg-config --cflags gtk4`
@@ -59,7 +59,7 @@ fmt_flags := ". -regex '.*\\.\\(cpp\\|hpp\\|cc\\|cxx\\|c\\|h\\)' -exec "+clang_f
 r:
 	rm -rf target
 	mkdir -p target
-	{{clang_which}} {{ldflags_common}} {{gtk4_cflags}} -o {{target}} {{source}} {{gtk4_libs}}
+	{{clang_which}} {{gtk4_cflags}} -o {{target}} {{source}} {{gtk4_libs}}
 	{{target}}
 
 # (C)clang compile(Optimization)
