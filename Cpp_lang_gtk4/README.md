@@ -15,10 +15,18 @@
 
 # justfile(c++)
 
+
 ```justfile
+
+project_name := `basename "$(pwd)"`
+
 # which g++ (c23 + 26)
 gpp_which := "/opt/gcc-15/bin/g++"
 clang_which := "/usr/bin/clang++-20"
+
+# gtk4 pkg-config
+gtk4_cflags := `pkg-config --cflags gtk4`
+gtk4_libs := `pkg-config --libs gtk4 gtkmm-4.0 glibmm-2.4 glib-2.0`
 
 # clang-format
 clang_format := `which clang-format-20`
@@ -30,7 +38,7 @@ target_dir := "target"
 # Files
 source := src_dir+"/main.cpp"
 target := "./"+target_dir+"/main"
-module_source := src_dir+"/modules/*.ixx"
+module_source := src_dir+"/headers/*.h"
 module_target := target_dir+"/*.o"
 main_target := target_dir+"/main.o"
 
@@ -52,11 +60,21 @@ fmt_flags := ". -regex '.*\\.\\(cpp\\|hpp\\|cc\\|cxx\\|c\\|h\\)' -exec "+clang_f
 r:
     rm -rf target gcm.cache
     mkdir -p target
-    {{gpp_which}} {{ldflags_common}} -fmodules-ts -c {{module_source}} 
-    {{gpp_which}} {{ldflags_common}} -fmodules-ts -c {{source}} 
-    {{gpp_which}} {{ldflags_common}} -fmodules-ts *.o
+    {{gpp_which}} {{gtk4_cflags}} -fmodules-ts -c {{module_source}} {{gtk4_libs}} 
+    {{gpp_which}} -fmodules-ts -c {{source}} 
+    {{gpp_which}} -fmodules-ts *.o
     mv gcm.cache *.o a.out {{target_dir}}/
     {{target_dir}}/a.out
+
+# cmake (build)
+cr:
+	rm -rf build
+	mkdir -p build
+	cd build
+	cmake -G Ninja ./build/..
+	ninja
+	mv build.ninja CMakeCache.txt CMakeFiles cmake_install.cmake target .ninja_deps .ninja_log {{project_name}} build
+	./build/{{project_name}}
 
 # zig c++ compile
 zr:
@@ -218,4 +236,58 @@ vscode:
 	echo '        }' >> .vscode/tasks.json
 	echo '    ],' >> .vscode/tasks.json
 	echo '    "version": "2.0.0"' >> .vscode/tasks.json
+```
+
+# cmakefile(sample)
+
+
+```cmake
+cmake_minimum_required(VERSION 3.28)
+get_filename_component(ProjectId ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+string(REPLACE " " "_" ProjectId ${ProjectId})
+project(${ProjectId} LANGUAGES CXX)
+
+# Force GCC 15
+set(CMAKE_CXX_COMPILER "/opt/gcc-15/bin/g++")
+
+# Enable C++26
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Find packages
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTKMM4 REQUIRED gtkmm-4.0)
+
+find_package(Threads REQUIRED)
+
+# Sources
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+add_executable(${ProjectId}
+  ${SRC_DIR}/main.cpp
+  ${SRC_DIR}/helloworld.cpp
+)
+
+# Include directories
+target_include_directories(${ProjectId} PRIVATE
+  ${GTKMM4_INCLUDE_DIRS}
+  ${SRC_DIR}/headers
+)
+
+# Link libraries
+target_link_libraries(${ProjectId} PRIVATE
+  ${GTKMM4_LIBRARIES}
+  Threads::Threads
+)
+
+# Compiler flags for packages
+target_compile_options(${ProjectId} PRIVATE
+  ${GTKMM4_CFLAGS_OTHER}
+)
+
+# Linker flags for packages
+target_link_options(${ProjectId} PRIVATE
+  ${GTKMM4_LDFLAGS_OTHER}
+)
 ```
