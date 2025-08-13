@@ -18,7 +18,7 @@ target_dir := "target"
 # Files
 source := src_dir+"/main.cpp"
 target := "./"+target_dir+"/main"
-module_source := src_dir+"/ixx_module/*.ixx"
+module_source := src_dir+"/modules/*.ixx"
 module_target := target_dir+"/*.o"
 main_target := target_dir+"/main.o"
 
@@ -62,7 +62,7 @@ b:
 # .clang-format init
 cl:
 	rm -rf .clang-format
-	clang-format -style=WebKit -dump-config > .clang-format
+	{{clang_format}} -style=WebKit -dump-config > .clang-format
 
 # .clang-format fmt
 fmt:

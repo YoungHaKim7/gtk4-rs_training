@@ -1,7 +1,7 @@
 # Using multiple threads with GTK?
 - https://stackoverflow.com/questions/60817740/using-multiple-threads-with-gtk
 
-# justfile(c++)
+# justfile(c 언어)
 
 ```justfile
 # which clang
