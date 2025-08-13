@@ -1,3 +1,21 @@
+# link
+
+- compile방법
+- justfile
+
+
+<hr />
+
+# `GtkApplication` child 오브젝트
+
+- The GApplication object is a child object of the GObject object. GObject is the top object in the hierarchy of all the objects.
+
+```
+GObject -- GApplication -- GtkApplication
+<---parent                      --->child
+```
+# compile
+
 ```bash
 gcc `pkg-config --cflags gtk4` pr1.c `pkg-config --libs gtk4`
 ```
