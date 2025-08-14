@@ -28,7 +28,7 @@ gcc `pkg-config --cflags gtk4` pr1.c `pkg-config --libs gtk4`
 clang_which := `which clang-20`
 
 # clang-format
-clang_format := `which clang-format`
+clang_format := `which clang-format-20`
 
 # gtk4 pkg-config
 gtk4_cflags := `pkg-config --cflags gtk4`
