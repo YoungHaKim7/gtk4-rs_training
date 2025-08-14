@@ -51,7 +51,7 @@ cr:
 	rm -rf build
 	mkdir -p build
 	cd build
-	cmake -G Ninja ./build/..
+	cmake -G Ninja .
 	ninja
 	mv build.ninja CMakeCache.txt CMakeFiles cmake_install.cmake target .ninja_deps .ninja_log {{project_name}} build
 	./build/{{project_name}}
@@ -135,6 +135,7 @@ xx:
 # clean files
 clean:
 	rm -rf {{target_dir}} *.out {{src_dir}}/*.out *.bc {{src_dir}}/target/ *.dSYM {{src_dir}}/*.dSYM *.i *.o *.s
+	rm -rf build CMakeCache.txt CMakeFiles
 
 # C++ init
 init:
